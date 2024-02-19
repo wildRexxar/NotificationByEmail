@@ -7,6 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ErrorMailCreateDto {
     private String message;
-    private String status;
     private long idMail;
 }

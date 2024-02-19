@@ -14,7 +14,6 @@ public class ErrorMailCreateMapper implements Mapper<ErrorMailCreateDto, ErrorMa
         ErrorMail errorMail = new ErrorMail();
         errorMail.setMessage(errorCreateDto.getMessage());
         errorMail.setDate(LocalDateTime.now());
-        errorMail.setStatus(errorCreateDto.getStatus());
         errorMail.setIdMail(errorCreateDto.getIdMail());
         return errorMail;
     }

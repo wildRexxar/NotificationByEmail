@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfiguration {
 
     public static final String EXCHANGE = "exchange";
-
     public static final String QUEUE = "sending";
 
     @Bean

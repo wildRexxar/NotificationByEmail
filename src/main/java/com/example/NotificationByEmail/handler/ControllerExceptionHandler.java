@@ -1,6 +1,10 @@
 package com.example.NotificationByEmail.handler;
 
-import com.example.NotificationByEmail.entity.Response;
+import com.example.NotificationByEmail.dto.ErrorMailCreateDto;
+import com.example.NotificationByEmail.handler.exception.*;
+import com.example.NotificationByEmail.service.interfaces.GroupService;
+import com.example.NotificationByEmail.service.interfaces.TemplateService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +19,6 @@ import java.util.List;
 @Slf4j
 @ControllerAdvice
 public class ControllerExceptionHandler {
-    private static final String ERROR_VALIDATION_CODE = "999";
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<?> handleExceptiom(BindingResult bindingResult) {
@@ -24,7 +27,33 @@ public class ControllerExceptionHandler {
         for (ObjectError error : errors) {
             validateError.append(error.getDefaultMessage() + ". ");
         }
-        return new ResponseEntity<>(new Response(ERROR_VALIDATION_CODE, validateError.toString()), HttpStatus.BAD_REQUEST
+        return new ResponseEntity<>(validateError, HttpStatus.BAD_REQUEST
         );
     }
+
+    @ExceptionHandler(UniqueMessageExistException.class)
+    public ResponseEntity<?> handleExceptionUniqueMessage(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MailNotFoundException.class)
+    public ResponseEntity<?> handleExceptionMailNotFound(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TemplateNotFoundException.class)
+    public ResponseEntity<?> handleExceptionTemplateNotFound(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GroupNotFoundException.class)
+    public ResponseEntity<?> handleExceptionGroupNotFound(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler( MailListIsEmptyException.class)
+    public ResponseEntity<?> handleExceptionMailListIsEmpty() {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

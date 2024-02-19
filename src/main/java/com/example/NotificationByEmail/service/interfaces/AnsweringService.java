@@ -4,5 +4,5 @@ import com.example.NotificationByEmail.dto.MailCreateDto;
 import org.springframework.http.ResponseEntity;
 
 public interface AnsweringService {
-    ResponseEntity<?> preparationForSend(MailCreateDto mailCreateDto);
+   void preparationForSend(MailCreateDto mailCreateDto);
 }
